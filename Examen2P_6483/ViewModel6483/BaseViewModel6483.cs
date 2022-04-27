@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Examen2P_6483.ViewModel6483
 {
-    internal class BaseViewModel6483 : INotifyPropertyChanged
+    public class BaseViewModel6483 : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
