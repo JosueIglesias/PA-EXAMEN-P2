@@ -2,38 +2,34 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:Examen2P_6483.Models6483"
-             xmlns:vm="clr-namespace:Examen2P_6483.ViewModel6483"
-             x:Class="Examen2P_6483.Views6483.MainPage6483"
-             x:Name="thisMainPage"
-             Title="Accounts">
-    <ContentPage.BindingContext>
-        <vm:AccountViewModel6483/>
-    </ContentPage.BindingContext>
+             Title="Transactions"
+             x:Class="Examen2P_6483.Views6483.AccountDetail6483"
+             x:Name="thisAccountDetail">
     <ContentPage.Content>
         <StackLayout>
-            <ScrollView>
+            <ScrollView BindingContext="{Binding BindingContext.Account, Source={x:Reference thisAccountDetail}}">
                 <StackLayout BackgroundColor="AliceBlue" VerticalOptions="FillAndExpand" >
-                    <CollectionView ItemsSource="{Binding BindingContext.AccountsList, Source={x:Reference thisMainPage}}" >
+                    <CollectionView ItemsSource="{Binding Transactions}" >
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="model:Account6483">
+                            <DataTemplate x:DataType="model:Transaction6483">
                                 <Grid RowDefinitions="auto,auto,auto,auto"  BackgroundColor="#A3CEF1" ColumnDefinitions="320">
-                                    <Label Grid.Row="0" Text="{Binding Name}"/>
-                                    <Label Grid.Row="1" Text="{Binding AccountNumber}"/>
-                                    <Label Grid.Row="2" Text="{Binding Balance}" FontSize="Micro" TextColor="Gray"/>
+                                    <Label Grid.Row="0" Text="{Binding Amount}"/>
+                                    <Label Grid.Row="1" Text="{Binding Date}"/>
+                                    <Label Grid.Row="2" Text="{Binding Hour}" FontSize="Micro" TextColor="Gray"/>
                                     <BoxView Grid.Row="3" BackgroundColor="Black" HeightRequest="1" Grid.ColumnSpan="3"/>
-                                    <StackLayout Grid.Row="0" Grid.RowSpan="4">
+                                    <!--<StackLayout Grid.Row="0" Grid.RowSpan="4">
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding BindingContext.cmdAccountDetail, Source={x:Reference thisMainPage}}"
                                                                   CommandParameter="{Binding .}"/>
                                         </StackLayout.GestureRecognizers>
-                                    </StackLayout>
+                                    </StackLayout>-->
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </StackLayout>
             </ScrollView>
-            <Button Command="{Binding BindingContext.cmdButton, Source={x:Reference thisMainPage}}" Text="Boton"></Button>
+            <!--<Button Command="{Binding BindingContext.cmdButton, Source={x:Reference thisMainPage}}" Text="Boton"></Button>-->
 
         </StackLayout>
     </ContentPage.Content>

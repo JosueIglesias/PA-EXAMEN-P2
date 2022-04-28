@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Examen2P_6483.Views6483.RegistrationPage6483">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label>Name</Label>
+            <Entry/>
+            <Label>Patern last name</Label>
+            <Entry/>
+            <Label>Matern last name</Label>
+            <Entry/>
+            <Label>Phone</Label>
+            <Entry/>
+            <Button Text="Register" HorizontalOptions="Center"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

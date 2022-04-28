@@ -11,11 +11,14 @@ using Xamarin.Forms.Xaml;
 namespace Examen2P_6483.Views6483
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPage6483 : ContentPage
+    public partial class AccountDetail6483 : ContentPage
     {
-        public MainPage6483()
+        public AccountDetail6483(Models6483.Account6483 account, AccountViewModel6483 vm)
         {
             InitializeComponent();
+            vm.Account = new Models6483.Account6483();
+            vm.Account = account;
+            this.BindingContext = vm;
         }
     }
 }
