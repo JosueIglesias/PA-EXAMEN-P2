@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:triggers ="clr-namespace:Examen2P_6483.Triggers6483"
+             xmlns:model="clr-namespace:Examen2P_6483.Models6483"
+             xmlns:vm="clr-namespace:Examen2P_6483.ViewModel6483"
+             x:Class="Examen2P_6483.Views6483.NewAccount6483"
+             x:Name="thisNewAccount"
+             >
+    <ContentPage.Content>
+        <StackLayout BindingContext="{Binding BindingContext.Account, Source={x:Reference thisNewAccount}}"
+                     x:DataType="model:Account6483"
+                     Margin="10">
+            <Label>Acount name</Label>
+            <Entry Text="{Binding Name}" ClassId="Name"/>
+            <Label>Account number</Label>
+            <Entry Text="{Binding AccountNumber}" x:Name="AccountNumber"/>
+            <Label>Balance</Label>
+            <Entry Keyboard="Numeric" Text="{Binding Balance}" x:Name="Balance">
+                <Entry.Triggers>
+                    <EventTrigger Event="TextChanged">
+                        <triggers:NewAccountValidationTrigger6483/>
+                    </EventTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Button Command="{Binding BindingContext.cmdAddAccount, Source={x:Reference thisNewAccount}}" Text="Add account" HorizontalOptions="Center"
+                    CommandParameter="{Binding BindingContext.Account, Source={x:Reference thisNewAccount}}">
+                <!--<Button.Triggers>
+                    <EventTrigger Event="TextChanged">
+                        <triggers:NewAccountValidationTrigger6483/>
+                    </EventTrigger>
+                </Button.Triggers>-->
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

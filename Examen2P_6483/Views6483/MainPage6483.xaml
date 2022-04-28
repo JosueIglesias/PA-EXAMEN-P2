@@ -33,7 +33,7 @@
                     </CollectionView>
                 </StackLayout>
             </ScrollView>
-            <Button Command="{Binding BindingContext.cmdButton, Source={x:Reference thisMainPage}}" Text="Boton"></Button>
+            <Button Command="{Binding BindingContext.cmdNewAccount, Source={x:Reference thisMainPage}}" Text="New Account"></Button>
 
         </StackLayout>
     </ContentPage.Content>

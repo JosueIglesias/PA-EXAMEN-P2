@@ -32,6 +32,12 @@ namespace Examen2P_6483.ViewModel6483
 
         public ICommand cmdButton { get; set; }
         public ICommand cmdAccountDetail { get; set; }
+        public ICommand cmdNewAccount { get; set; }
+        public ICommand cmdAddAccount { get; set; }
+        public ICommand cmdDeposit { get; set; }
+        public ICommand cmdWithdrawal { get; set; }
+
+
 
         public AccountViewModel6483()
         {
@@ -64,20 +70,48 @@ namespace Examen2P_6483.ViewModel6483
             AccountsList = User.Accounts;
 
             //public ICommand cmdButton { get; set; }
-            cmdButton = new Command(async () => await PCmdButton());
+            cmdNewAccount = new Command(async () => await PCmdNewAccount());
             cmdAccountDetail = new Command<Account6483>(async (x) => await PCmdAccountDetail(x));
+            cmdAddAccount = new Command<Account6483>(async (x) => await PCmdAddAccount(x));
+            cmdDeposit = new Command(async () => await PCmdDeposit());
+            cmdWithdrawal = new Command(async () => await PCmdWithdrawal());
+
 
             #region Commands
-
-            async Task PCmdButton()
-            {
-                Console.WriteLine(User.Accounts[0].Transactions[0].Amount);
-                Console.WriteLine("Hola");
-            }
 
             async Task PCmdAccountDetail(Models6483.Account6483 _Account)
             {
                 await Application.Current.MainPage.Navigation.PushAsync(new Views6483.AccountDetail6483(_Account, this));
+            }
+
+            async Task PCmdNewAccount()
+            {
+                //Console.WriteLine(User.Accounts[0].Transactions[0].Amount);
+                //Console.WriteLine("Hola");
+                await Application.Current.MainPage.Navigation.PushAsync(new Views6483.NewAccount6483(this));
+
+            }
+
+            async Task PCmdAddAccount(Models6483.Account6483 _Account)
+            {
+                User.Accounts.Add(_Account);
+                AccountsList = User.Accounts;
+                Console.WriteLine("Cuenta Añadida");
+                Console.WriteLine(User.Accounts[4].Name);
+                Console.WriteLine(User.Accounts[4].AccountNumber);
+                Console.WriteLine(User.Accounts[4].Balance);
+
+
+
+                await Application.Current.MainPage.Navigation.PopAsync();
+
+
+            }
+
+            async Task PCmdDeposit()
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new Views6483.NewTransaction6483(hola));
+
             }
             #endregion
 

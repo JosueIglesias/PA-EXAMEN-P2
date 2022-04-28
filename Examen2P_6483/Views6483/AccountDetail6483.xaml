@@ -29,7 +29,9 @@
                     </CollectionView>
                 </StackLayout>
             </ScrollView>
-            <!--<Button Command="{Binding BindingContext.cmdButton, Source={x:Reference thisMainPage}}" Text="Boton"></Button>-->
+            <Button Command="{Binding BindingContext.cmdDeposit, Source={x:Reference thisAccountDetail}}" Text="Deposit"></Button>
+            <Button Command="{Binding BindingContext.cmdWithdrawal, Source={x:Reference thisAccountDetail}}" Text="Withdrawal"></Button>
+
 
         </StackLayout>
     </ContentPage.Content>
