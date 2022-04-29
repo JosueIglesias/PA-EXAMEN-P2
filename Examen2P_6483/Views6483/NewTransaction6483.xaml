@@ -11,7 +11,7 @@
                      x:DataType="model:Transaction6483"
                      Margin="10">
                 <Label x:Name="AccountName">Transaction</Label>
-                <Entry Text="{Binding Amount}" x:Name="EntryAmount"/>
+                <Entry Text="{Binding Amount}" x:Name="EntryAmount" Keyboard="Numeric"/>
                 
                 <Button x:Name="BtnDeposit" Text="Accept" HorizontalOptions="Center"  Command="{Binding BindingContext.cmdDepositTransaction, Source={x:Reference thisNewTransaction}}"
                 CommandParameter="{Binding BindingContext.Transaction, Source={x:Reference thisNewTransaction}}"/>

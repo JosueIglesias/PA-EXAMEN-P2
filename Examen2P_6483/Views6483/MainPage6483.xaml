@@ -6,9 +6,9 @@
              x:Class="Examen2P_6483.Views6483.MainPage6483"
              x:Name="thisMainPage"
              Title="Accounts">
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <vm:AccountViewModel6483/>
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
     <ContentPage.Content>
         <StackLayout Margin="0,0,0,10" BackgroundColor="AliceBlue">
             <ScrollView>
@@ -21,12 +21,12 @@
                             <DataTemplate x:DataType="model:Account6483">
                                 <Frame Padding="10,10,10,10" CornerRadius="6" BackgroundColor="#A3CEF1" >
                                     <Grid RowDefinitions="auto,auto,auto"   ColumnDefinitions="320">
-                                        <Label Grid.Row="0" Text="{Binding Name}" FontSize="Medium"/>
+                                        <Label Grid.Row="0" Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold"/>
 
                                         <Label Grid.Row="1">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="Account:" FontAttributes="Bold"/>
+                                                    <Span Text="Account number:" FontAttributes="Bold"/>
                                                     <Span Text=" "/>
                                                     <Span Text="{Binding AccountNumber}"/>
                                                 </FormattedString>
@@ -56,7 +56,11 @@
                     </CollectionView>
                 </StackLayout>
             </ScrollView>
-            <Button Command="{Binding BindingContext.cmdNewAccount, Source={x:Reference thisMainPage}}" Text="New Account" HorizontalOptions="Center" TextColor="White" BackgroundColor="#6096BA"></Button>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button Command="{Binding BindingContext.cmdProfileEditionPage, Source={x:Reference thisMainPage}}" Text="Edit profile" HorizontalOptions="Center" TextColor="White" BackgroundColor="#6096BA"></Button>
+                <Button Command="{Binding BindingContext.cmdNewAccount, Source={x:Reference thisMainPage}}" Text="New Account" HorizontalOptions="Center" TextColor="White" BackgroundColor="#6096BA"></Button>
+
+            </StackLayout>
 
         </StackLayout>
     </ContentPage.Content>

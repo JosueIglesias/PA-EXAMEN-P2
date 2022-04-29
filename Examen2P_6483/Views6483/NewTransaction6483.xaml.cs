@@ -27,7 +27,7 @@ namespace Examen2P_6483.Views6483
             if (TransactionType == "Deposit")
             {
                 Console.WriteLine("Deposit");
-                AccountName.Text = "Cantidad a depositar";
+                AccountName.Text = "Deposit amount";
                 BtnWithdrawal.IsVisible = false;
                 vm.Transaction.Type = "Deposit";
                 
@@ -36,7 +36,7 @@ namespace Examen2P_6483.Views6483
             if (TransactionType == "Withdrawal")
             {
                 Console.WriteLine("Withdrawal");
-                AccountName.Text = "Cantidad a Retirar";
+                AccountName.Text = "Withdraw amount";
                 BtnDeposit.IsVisible = false;
                 vm.Transaction.Type = "Withdrawal";
 

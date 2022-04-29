@@ -1,18 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Examen2P_6483.Views6483.RegistrationPage6483">
+             xmlns:model="clr-namespace:Examen2P_6483.Models6483" 
+             xmlns:vm="clr-namespace:Examen2P_6483.ViewModel6483"
+             x:Class="Examen2P_6483.Views6483.RegistrationPage6483"
+             x:Name="thisRegistration"
+             Title="Registration">
+    <!--<ContentPage.BindingContext>
+        <vm:AccountViewModel6483/>
+    </ContentPage.BindingContext>-->
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout BindingContext="{Binding BindingContext.User, Source={x:Reference thisRegistration}}"
+                      x:DataType="model:User6483"
+                     Margin="10">
             <Label>Name</Label>
-            <Entry/>
-            <Label>Patern last name</Label>
-            <Entry/>
-            <Label>Matern last name</Label>
-            <Entry/>
+            <Entry Text="{Binding FirstName}" x:Name="EntryFirstName"/>
+            <Label>Father's last name</Label>
+            <Entry Text="{Binding MaternalLastName}" x:Name="EntryMaternalLastName"/>
+            <Label>Mother's last name</Label>
+            <Entry Text="{Binding PaternalLastName}" x:Name="EntryPaternalLastName"/>
             <Label>Phone</Label>
-            <Entry/>
-            <Button Text="Register" HorizontalOptions="Center"/>
+            <Entry Text="{Binding Phone}" x:Name="EntryPhone"/>
+            <Button Text="Register" HorizontalOptions="Center"  Command="{Binding BindingContext.cmdRegister, Source={x:Reference thisRegistration}}"
+                    CommandParameter="{Binding BindingContext.User, Source={x:Reference thisRegistration}}"/>
+
+            <!--CommandParameter="{Binding .}"/>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -13,9 +13,11 @@ namespace Examen2P_6483.Views6483
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage6483 : ContentPage
     {
-        public MainPage6483()
+        public MainPage6483(AccountViewModel6483 vm)
         {
             InitializeComponent();
+            BindingContext = vm;
+
         }
     }
 }

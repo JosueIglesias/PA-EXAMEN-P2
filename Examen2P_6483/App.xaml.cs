@@ -11,7 +11,7 @@ namespace Examen2P_6483
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage (new MainPage6483());
+            MainPage = new NavigationPage (new RegistrationPage6483(new ViewModel6483.AccountViewModel6483()));
         }
 
         protected override void OnStart()
