@@ -13,8 +13,8 @@
                      Margin="10">
             <Label>Acount name</Label>
             <Entry Text="{Binding Name}" ClassId="Name"/>
-            <Label>Account number</Label>
-            <Entry Text="{Binding AccountNumber}" x:Name="AccountNumber"/>
+            <!--<Label>Account number</Label>
+            <Entry Text="{Binding AccountNumber}" x:Name="AccountNumber"/>-->
             <Label>Balance</Label>
             <Entry Keyboard="Numeric" Text="{Binding Balance}" x:Name="Balance">
                 <Entry.Triggers>
@@ -24,7 +24,7 @@
                 </Entry.Triggers>
             </Entry>
             <Button Command="{Binding BindingContext.cmdAddAccount, Source={x:Reference thisNewAccount}}" Text="Add account" HorizontalOptions="Center"
-                    CommandParameter="{Binding BindingContext.Account, Source={x:Reference thisNewAccount}}">
+                    CommandParameter="{Binding BindingContext.Account, Source={x:Reference thisNewAccount}}" BackgroundColor="#6096BA" TextColor="White" CornerRadius="5">
                 <!--<Button.Triggers>
                     <EventTrigger Event="TextChanged">
                         <triggers:NewAccountValidationTrigger6483/>

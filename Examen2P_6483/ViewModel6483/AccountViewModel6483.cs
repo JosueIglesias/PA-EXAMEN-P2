@@ -99,40 +99,43 @@ namespace Examen2P_6483.ViewModel6483
 
             async Task PCmdRegister(Models6483.User6483 _User)
             {
-                Console.WriteLine(_User.FirstName);
+                if (_User.FirstName != null) {
+                    //User6483 User = new User6483()
+                    //{
+                    //    FirstName = _User.FirstName,
+                    //    PaternalLastName = _User.PaternalLastName,
+                    //    MaternalLastName = _User.MaternalLastName,
+                    //    Phone = _User.Phone,
+                    //    Accounts = new ObservableCollection<Account6483>()
+                    //};
 
-                //User6483 User = new User6483()
-                //{
-                //    FirstName = _User.FirstName,
-                //    PaternalLastName = _User.PaternalLastName,
-                //    MaternalLastName = _User.MaternalLastName,
-                //    Phone = _User.Phone,
-                //    Accounts = new ObservableCollection<Account6483>()
-                //};
+                    RegisteredUser.FirstName = _User.FirstName;
+                    RegisteredUser.PaternalLastName = _User.PaternalLastName;
+                    RegisteredUser.MaternalLastName = _User.MaternalLastName;
+                    RegisteredUser.Phone = _User.Phone;
+                    RegisteredUser.Accounts = new ObservableCollection<Account6483>();
+                    AccountsList = RegisteredUser.Accounts;
 
-                RegisteredUser.FirstName = _User.FirstName;
-                RegisteredUser.PaternalLastName = _User.PaternalLastName;
-                RegisteredUser.MaternalLastName = _User.MaternalLastName;
-                RegisteredUser.Phone = _User.Phone;
-                RegisteredUser.Accounts = new ObservableCollection<Account6483>();
-                AccountsList = RegisteredUser.Accounts;
-
-                Console.WriteLine(_User.FirstName);
-                //await Application.Current.MainPage.Navigation.PushAsync(new Views6483.MainPage6483(this));
-                Application.Current.MainPage = new NavigationPage(new Views6483.MainPage6483(this));
+                    Console.WriteLine(_User.FirstName);
+                    //await Application.Current.MainPage.Navigation.PushAsync(new Views6483.MainPage6483(this));
+                    Application.Current.MainPage = new NavigationPage(new Views6483.MainPage6483(this));
 
 
+                }
 
             }
 
             async Task PCmdUpdateProfileInfo(Models6483.User6483 _User)
             {
-                RegisteredUser.FirstName = _User.FirstName;
-                RegisteredUser.PaternalLastName = _User.PaternalLastName;
-                RegisteredUser.MaternalLastName = _User.MaternalLastName;
-                RegisteredUser.Phone = _User.Phone;
+                if (_User.FirstName != null)
+                {
+                    RegisteredUser.FirstName = _User.FirstName;
+                    RegisteredUser.PaternalLastName = _User.PaternalLastName;
+                    RegisteredUser.MaternalLastName = _User.MaternalLastName;
+                    RegisteredUser.Phone = _User.Phone;
 
-                await Application.Current.MainPage.Navigation.PopAsync();
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                }
             }
 
             async Task PCmdProfileEditionPage()
@@ -156,6 +159,7 @@ namespace Examen2P_6483.ViewModel6483
             {
                 if (_Account.Balance > 0)
                 {
+                    _Account.AccountNumber = new Random().Next(1000, 9999).ToString();
                     RegisteredUser.Accounts.Add(_Account);
                     AccountsList = RegisteredUser.Accounts;
                     Console.WriteLine("Cuenta Añadida");

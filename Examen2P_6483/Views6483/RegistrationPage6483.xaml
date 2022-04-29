@@ -22,7 +22,7 @@
             <Label>Phone</Label>
             <Entry Text="{Binding Phone}" x:Name="EntryPhone"/>
             <Button Text="Register" HorizontalOptions="Center"  Command="{Binding BindingContext.cmdRegister, Source={x:Reference thisRegistration}}"
-                    CommandParameter="{Binding BindingContext.User, Source={x:Reference thisRegistration}}"/>
+                    CommandParameter="{Binding BindingContext.User, Source={x:Reference thisRegistration}}" BackgroundColor="#6096BA" TextColor="White" CornerRadius="5"/>
 
             <!--CommandParameter="{Binding .}"/>-->
         </StackLayout>
