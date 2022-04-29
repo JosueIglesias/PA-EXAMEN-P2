@@ -1,9 +1,7 @@
 ﻿using Examen2P_6483.Models6483;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -50,7 +48,8 @@ namespace Examen2P_6483.ViewModel6483
         public ICommand cmdDeleteAccount { get; set; }
         public ICommand cmdRegister { get; set; }
         public ICommand cmdProfileEditionPage { get; set; }
-
+        public ICommand cmdUpdateProfileInfo { get; set; }
+        
 
 
         public AccountViewModel6483()
@@ -94,6 +93,7 @@ namespace Examen2P_6483.ViewModel6483
             cmdWithdrawalTransaction = new Command<Transaction6483>(async (x) => await PCmdWithdrawalTransaction(x));
             cmdRegister = new Command<User6483>(async (x) => await PCmdRegister(x));
             cmdProfileEditionPage = new Command(async () => await PCmdProfileEditionPage());
+            cmdUpdateProfileInfo = new Command<User6483>(async (x) => await PCmdUpdateProfileInfo(x));
 
             #region Commands
 
@@ -125,8 +125,19 @@ namespace Examen2P_6483.ViewModel6483
 
             }
 
+            async Task PCmdUpdateProfileInfo(Models6483.User6483 _User)
+            {
+                RegisteredUser.FirstName = _User.FirstName;
+                RegisteredUser.PaternalLastName = _User.PaternalLastName;
+                RegisteredUser.MaternalLastName = _User.MaternalLastName;
+                RegisteredUser.Phone = _User.Phone;
+
+                await Application.Current.MainPage.Navigation.PopAsync();
+            }
+
             async Task PCmdProfileEditionPage()
             {
+                await Application.Current.MainPage.Navigation.PushAsync(new Views6483.EditProfile6483(this));
 
             }
 
@@ -143,11 +154,14 @@ namespace Examen2P_6483.ViewModel6483
 
             async Task PCmdAddAccount(Models6483.Account6483 _Account)
             {
-                RegisteredUser.Accounts.Add(_Account);
-                AccountsList = RegisteredUser.Accounts;
-                Console.WriteLine("Cuenta Añadida");
+                if (_Account.Balance > 0)
+                {
+                    RegisteredUser.Accounts.Add(_Account);
+                    AccountsList = RegisteredUser.Accounts;
+                    Console.WriteLine("Cuenta Añadida");
 
-                await Application.Current.MainPage.Navigation.PopAsync();
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                }
             }
 
             async Task PCmdDeleteAccount(Models6483.Account6483 _Account)
@@ -172,6 +186,7 @@ namespace Examen2P_6483.ViewModel6483
             {
                 await Application.Current.MainPage.Navigation.PushAsync(new Views6483.NewTransaction6483("Deposit", Account, this));
             }
+
             async Task PCmdWithdrawal()
             {
                 await Application.Current.MainPage.Navigation.PushAsync(new Views6483.NewTransaction6483("Withdrawal", Account, this));
