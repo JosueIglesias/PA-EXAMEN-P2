@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -22,6 +23,14 @@ namespace Examen2P_6483.ViewModel6483
             get { return account; }
             set { account = value; OnPropertyChanged(); }
         }
+
+        private Transaction6483 transaction;
+        public Transaction6483 Transaction
+        {
+            get { return transaction; }
+            set { transaction = value; OnPropertyChanged(); }
+        }
+
         private User6483 user;
         public User6483 User
         {
@@ -36,8 +45,9 @@ namespace Examen2P_6483.ViewModel6483
         public ICommand cmdAddAccount { get; set; }
         public ICommand cmdDeposit { get; set; }
         public ICommand cmdWithdrawal { get; set; }
-
-
+        public ICommand cmdDepositTransaction { get; set; }
+        public ICommand cmdWithdrawalTransaction { get; set; }
+        public ICommand cmdDeleteAccount { get; set; }
 
         public AccountViewModel6483()
         {
@@ -53,13 +63,13 @@ namespace Examen2P_6483.ViewModel6483
                 Phone = "3123123124",
                 Accounts = new ObservableCollection<Account6483>()
             {
-                new Account6483{ Name = "Shopping", AccountNumber = Guid.NewGuid().ToString(), Balance = 5000, Transactions = new ObservableCollection<Transaction6483>(){
+                new Account6483{ Name = "Shopping1", AccountNumber = new Random().Next(1000, 9999).ToString(), Balance = 5000, Transactions = new ObservableCollection<Transaction6483>(){
                     new Transaction6483 { Amount = 1000, Date = "27/04/2022", Hour = "13:00" } } },
-                new Account6483{ Name = "Shopping", AccountNumber = Guid.NewGuid().ToString(), Balance = 5000, Transactions = new ObservableCollection<Transaction6483>(){
+                new Account6483{ Name = "Shopping2", AccountNumber = new Random().Next(1000, 9999).ToString(), Balance = 5000, Transactions = new ObservableCollection<Transaction6483>(){
                     new Transaction6483 { Amount = 1000, Date = "27/04/2022", Hour = "13:00" } } },
-                new Account6483{ Name = "Shopping", AccountNumber = Guid.NewGuid().ToString(), Balance = 5000, Transactions = new ObservableCollection<Transaction6483>(){
+                new Account6483{ Name = "Shopping3", AccountNumber = new Random().Next(1000, 9999).ToString(), Balance = 5000, Transactions = new ObservableCollection<Transaction6483>(){
                     new Transaction6483 { Amount = 1000, Date = "27/04/2022", Hour = "13:00" } } },
-                new Account6483{ Name = "Shopping", AccountNumber = Guid.NewGuid().ToString(), Balance = 5000, Transactions = new ObservableCollection<Transaction6483>(){
+                new Account6483{ Name = "Shopping4", AccountNumber = new Random().Next(1000, 9999).ToString(), Balance = 5000, Transactions = new ObservableCollection<Transaction6483>(){
                     new Transaction6483 { Amount = 1000, Date = "27/04/2022", Hour = "13:00" },
                     new Transaction6483 { Amount = 2000, Date = "27/04/2022", Hour = "13:00" },
                     new Transaction6483 { Amount = 1000, Date = "27/04/2022", Hour = "13:00" }
@@ -73,14 +83,18 @@ namespace Examen2P_6483.ViewModel6483
             cmdNewAccount = new Command(async () => await PCmdNewAccount());
             cmdAccountDetail = new Command<Account6483>(async (x) => await PCmdAccountDetail(x));
             cmdAddAccount = new Command<Account6483>(async (x) => await PCmdAddAccount(x));
+            cmdDeleteAccount = new Command<Account6483>(async (x) => await PCmdDeleteAccount(x));
             cmdDeposit = new Command(async () => await PCmdDeposit());
             cmdWithdrawal = new Command(async () => await PCmdWithdrawal());
+            cmdDepositTransaction = new Command<Transaction6483>(async (x) => await PCmdDepositTransaction(x));
+            cmdWithdrawalTransaction = new Command<Transaction6483>(async (x) => await PCmdWithdrawalTransaction(x));
 
 
             #region Commands
 
             async Task PCmdAccountDetail(Models6483.Account6483 _Account)
             {
+                //await Application.Current.MainPage.Navigation.PushAsync(new Views6483.AccountDetail6483(_Account, this));
                 await Application.Current.MainPage.Navigation.PushAsync(new Views6483.AccountDetail6483(_Account, this));
             }
 
@@ -97,26 +111,153 @@ namespace Examen2P_6483.ViewModel6483
                 User.Accounts.Add(_Account);
                 AccountsList = User.Accounts;
                 Console.WriteLine("Cuenta Añadida");
-                Console.WriteLine(User.Accounts[4].Name);
-                Console.WriteLine(User.Accounts[4].AccountNumber);
-                Console.WriteLine(User.Accounts[4].Balance);
-
-
 
                 await Application.Current.MainPage.Navigation.PopAsync();
+            }
+
+            async Task PCmdDeleteAccount(Models6483.Account6483 _Account)
+            {
+                Console.WriteLine(User.Accounts[0].Balance);
+                Console.WriteLine(AccountsList[0].Balance);
+
+                if (_Account.Balance == 0)
+                {
+                    User.Accounts.Remove(_Account);
+                    AccountsList = User.Accounts;
+
+                    OnPropertyChanged();
 
 
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                }
+                
             }
 
             async Task PCmdDeposit()
             {
-                await Application.Current.MainPage.Navigation.PushAsync(new Views6483.NewTransaction6483(hola));
+                await Application.Current.MainPage.Navigation.PushAsync(new Views6483.NewTransaction6483("Deposit", Account, this));
+            }
+            async Task PCmdWithdrawal()
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new Views6483.NewTransaction6483("Withdrawal", Account, this));
+            }
 
+            async Task PCmdDepositTransaction(Models6483.Transaction6483 _Transaction)
+            {
+                DateTime actualDate = DateTime.Now;
+
+                _Transaction.Date = actualDate.ToString("d");
+                _Transaction.Hour = actualDate.ToString("t");
+
+                if (Account.Transactions == null)
+                {
+                    Account.Transactions = new ObservableCollection<Transaction6483>();
+                }
+                var index = -1;
+                Account6483 tmp = User.Accounts.FirstOrDefault(a => a.AccountNumber == Account.AccountNumber);
+                if (tmp != null)
+                {
+                    Account.Transactions.Add(_Transaction);
+                    Account.Balance += _Transaction.Amount;
+                    index = User.Accounts.IndexOf(tmp);
+                    User.Accounts[index] = Account;
+                }
+
+                OnPropertyChanged();
+
+                //await Application.Current.MainPage.Navigation.PopToRootAsync();
+                //await Application.Current.MainPage.Navigation.PushAsync(new Views6483.AccountDetail6483(Account, this));
+
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PopAsync();
+
+
+                //Console.WriteLine("Accion de depositar");
+                //Console.WriteLine(Account.Name);
+                //Console.WriteLine(_Transaction.Type);
+
+                //DateTime actualDate = DateTime.Now;
+
+                //    _Transaction.Date = actualDate.ToString("d");
+                //    _Transaction.Hour = actualDate.ToString("t");
+                //    Account.Balance += _Transaction.Amount;
+                //    Console.WriteLine(Account.Balance);
+
+
+                //    Account.Transactions.Add(_Transaction);
+
+                //Console.WriteLine("User Accounts: " + User.Accounts[1].Balance);
+                //Console.WriteLine("AccountsList: " + AccountsList[1].Balance);
+
+
+                //OnPropertyChanged();
+
+                //await Application.Current.MainPage.Navigation.PopAsync();
+                //await Application.Current.MainPage.Navigation.PopAsync();
+
+
+                //Account.Transactions.Add(_Transaction);
+            }
+
+            async Task PCmdWithdrawalTransaction(Models6483.Transaction6483 _Transaction)
+            {
+                DateTime actualDate = DateTime.Now;
+
+                _Transaction.Date = actualDate.ToString("d");
+                _Transaction.Hour = actualDate.ToString("t");
+
+                if (Account.Transactions == null)
+                {
+                    Account.Transactions = new ObservableCollection<Transaction6483>();
+                }
+                var index = -1;
+                Account6483 tmp = User.Accounts.FirstOrDefault(a => a.AccountNumber == Account.AccountNumber);
+                if (tmp != null)
+                {
+                    Account.Transactions.Add(_Transaction);
+                    Account.Balance -= _Transaction.Amount;
+                    index = User.Accounts.IndexOf(tmp);
+                    User.Accounts[index] = Account;
+                }
+
+                OnPropertyChanged();
+
+                //await Application.Current.MainPage.Navigation.PopToRootAsync();
+                //await Application.Current.MainPage.Navigation.PushAsync(new Views6483.AccountDetail6483(Account, this));
+
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PopAsync();
+
+                /*
+                //Console.WriteLine("Accion de Retirar");
+                //Console.WriteLine(Account.Name);
+
+                //Console.WriteLine(_Transaction.Type);
+
+                DateTime actualDate = DateTime.Now;
+
+                _Transaction.Date = actualDate.ToString("d");
+                _Transaction.Hour = actualDate.ToString("t");
+                Account.Balance -= _Transaction.Amount;
+                //Console.WriteLine(Account.Balance);
+
+
+                Account.Transactions.Add(_Transaction);
+
+                OnPropertyChanged();
+
+
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PopAsync();
+
+                //Account.Transactions.Add(_Transaction);
+
+                */
             }
             #endregion
 
         }
 
-
+        
     }
 }

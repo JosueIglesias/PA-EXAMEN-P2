@@ -2,28 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:model="clr-namespace:Examen2P_6483.Models6483"
+             xmlns:vm="clr-namespace:Examen2P_6483.ViewModel6483"
              x:Class="Examen2P_6483.Views6483.NewTransaction6483"
              x:Name="thisNewTransaction">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout >
             <StackLayout BindingContext="{Binding BindingContext.Transaction, Source={x:Reference thisNewTransaction}}"
                      x:DataType="model:Transaction6483"
                      Margin="10">
-                <Label x:Name="AccountName">Acount name</Label>
-                <Entry Text="{Binding Name}" ClassId="Name"/>
-                <Label>Account number</Label>
-                <Entry Text="{Binding AccountNumber}" x:Name="AccountNumber"/>
-                <Label>Balance</Label>
-                <Entry Keyboard="Numeric" Text="{Binding Balance}" x:Name="Balance">
-                </Entry>
-                <Button Command="{Binding BindingContext.cmdAddAccount, Source={x:Reference thisNewAccount}}" Text="Add account" HorizontalOptions="Center"
-                    CommandParameter="{Binding BindingContext.Account, Source={x:Reference thisNewAccount}}">
-                    <!--<Button.Triggers>
-                    <EventTrigger Event="TextChanged">
-                        <triggers:NewAccountValidationTrigger6483/>
-                    </EventTrigger>
-                </Button.Triggers>-->
-                </Button>
+                <Label x:Name="AccountName">Transaction</Label>
+                <Entry Text="{Binding Amount}" x:Name="EntryAmount"/>
+                
+                <Button x:Name="BtnDeposit" Text="Accept" HorizontalOptions="Center"  Command="{Binding BindingContext.cmdDepositTransaction, Source={x:Reference thisNewTransaction}}"
+                CommandParameter="{Binding BindingContext.Transaction, Source={x:Reference thisNewTransaction}}"/>
+                
+                <Button x:Name="BtnWithdrawal" Text="Accept" HorizontalOptions="Center"  Command="{Binding BindingContext.cmdWithdrawalTransaction, Source={x:Reference thisNewTransaction}}"
+                        CommandParameter="{Binding .}"/>
+                
+                
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

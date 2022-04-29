@@ -3,6 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Examen2P_6483.App">
     <Application.Resources>
+        <ResourceDictionary>
 
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="#274C77" />
+                <Setter Property="BarTextColor" Value="#E7ECEF" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

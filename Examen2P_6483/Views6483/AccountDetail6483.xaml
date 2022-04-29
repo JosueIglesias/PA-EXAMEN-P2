@@ -6,16 +6,40 @@
              x:Class="Examen2P_6483.Views6483.AccountDetail6483"
              x:Name="thisAccountDetail">
     <ContentPage.Content>
-        <StackLayout>
-            <ScrollView BindingContext="{Binding BindingContext.Account, Source={x:Reference thisAccountDetail}}">
+        <StackLayout BindingContext="{Binding BindingContext.Account, Source={x:Reference thisAccountDetail}}">
+            <ScrollView>
                 <StackLayout BackgroundColor="AliceBlue" VerticalOptions="FillAndExpand" >
                     <CollectionView ItemsSource="{Binding Transactions}" >
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Transaction6483">
-                                <Grid RowDefinitions="auto,auto,auto,auto"  BackgroundColor="#A3CEF1" ColumnDefinitions="320">
-                                    <Label Grid.Row="0" Text="{Binding Amount}"/>
-                                    <Label Grid.Row="1" Text="{Binding Date}"/>
-                                    <Label Grid.Row="2" Text="{Binding Hour}" FontSize="Micro" TextColor="Gray"/>
+                                <Grid RowDefinitions="auto,auto,auto,auto"  BackgroundColor="#F1F2EE" ColumnDefinitions="320">
+
+                                    <Label Grid.Row="0">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Amount" FontAttributes="Bold"/>
+                                                <Span Text=" "/>
+                                                <Span Text="$"/>
+                                                <Span Text="{Binding Amount}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Grid.Row="1">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Date:" FontAttributes="Bold"/>
+                                                <Span Text=" "/>
+                                                <Span Text="{Binding Date}"/>
+                                                <Span Text=" "/>
+                                                <Span Text="{Binding Hour}"/>
+
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                   
+                                    <Label Grid.Row="2" Text="{Binding Type}" FontSize="Small" TextColor="Gray"/>
+
                                     <BoxView Grid.Row="3" BackgroundColor="Black" HeightRequest="1" Grid.ColumnSpan="3"/>
                                     <!--<StackLayout Grid.Row="0" Grid.RowSpan="4">
                                         <StackLayout.GestureRecognizers>
@@ -29,8 +53,16 @@
                     </CollectionView>
                 </StackLayout>
             </ScrollView>
-            <Button Command="{Binding BindingContext.cmdDeposit, Source={x:Reference thisAccountDetail}}" Text="Deposit"></Button>
-            <Button Command="{Binding BindingContext.cmdWithdrawal, Source={x:Reference thisAccountDetail}}" Text="Withdrawal"></Button>
+            <StackLayout Margin="10">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Button Command="{Binding BindingContext.cmdDeposit, Source={x:Reference thisAccountDetail}}" Text="Deposit" CornerRadius="5" BackgroundColor="#6096BA" TextColor="White"></Button>
+                    <Button Command="{Binding BindingContext.cmdWithdrawal, Source={x:Reference thisAccountDetail}}" Text="Withdrawal" CornerRadius="5" BackgroundColor="#6096BA" TextColor="White"></Button>
+                </StackLayout>
+
+                <Button Command="{Binding BindingContext.cmdDeleteAccount, Source={x:Reference thisAccountDetail}}" Text="Delete account"
+                    CommandParameter="{Binding .}" BackgroundColor="Red" CornerRadius="5" TextColor="White" HorizontalOptions="Center"></Button>
+            </StackLayout>
+            
 
 
         </StackLayout>

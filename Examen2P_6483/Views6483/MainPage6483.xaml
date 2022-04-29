@@ -10,30 +10,53 @@
         <vm:AccountViewModel6483/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="0,0,0,10" BackgroundColor="AliceBlue">
             <ScrollView>
-                <StackLayout BackgroundColor="AliceBlue" VerticalOptions="FillAndExpand" >
+                <StackLayout BackgroundColor="AliceBlue" VerticalOptions="FillAndExpand" Margin="10" >
                     <CollectionView ItemsSource="{Binding BindingContext.AccountsList, Source={x:Reference thisMainPage}}" >
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Account6483">
-                                <Grid RowDefinitions="auto,auto,auto,auto"  BackgroundColor="#A3CEF1" ColumnDefinitions="320">
-                                    <Label Grid.Row="0" Text="{Binding Name}"/>
-                                    <Label Grid.Row="1" Text="{Binding AccountNumber}"/>
-                                    <Label Grid.Row="2" Text="{Binding Balance}" FontSize="Micro" TextColor="Gray"/>
-                                    <BoxView Grid.Row="3" BackgroundColor="Black" HeightRequest="1" Grid.ColumnSpan="3"/>
-                                    <StackLayout Grid.Row="0" Grid.RowSpan="4">
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding BindingContext.cmdAccountDetail, Source={x:Reference thisMainPage}}"
-                                                                  CommandParameter="{Binding .}"/>
-                                        </StackLayout.GestureRecognizers>
-                                    </StackLayout>
-                                </Grid>
+                                <Frame Padding="10,10,10,10" CornerRadius="6" BackgroundColor="#A3CEF1" >
+                                    <Grid RowDefinitions="auto,auto,auto"   ColumnDefinitions="320">
+                                        <Label Grid.Row="0" Text="{Binding Name}" FontSize="Medium"/>
+
+                                        <Label Grid.Row="1">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Account:" FontAttributes="Bold"/>
+                                                    <Span Text=" "/>
+                                                    <Span Text="{Binding AccountNumber}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Grid.Row="2">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Balance:" FontAttributes="Bold"/>
+                                                    <Span Text=" "/>
+                                                    <Span Text="$"/>
+                                                    <Span Text="{Binding Balance}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <StackLayout Grid.Row="0" Grid.RowSpan="3">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BindingContext.cmdAccountDetail, Source={x:Reference thisMainPage}}"
+                                                                      CommandParameter="{Binding .}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </StackLayout>
             </ScrollView>
-            <Button Command="{Binding BindingContext.cmdNewAccount, Source={x:Reference thisMainPage}}" Text="New Account"></Button>
+            <Button Command="{Binding BindingContext.cmdNewAccount, Source={x:Reference thisMainPage}}" Text="New Account" HorizontalOptions="Center" TextColor="White" BackgroundColor="#6096BA"></Button>
 
         </StackLayout>
     </ContentPage.Content>

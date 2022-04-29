@@ -20,7 +20,6 @@ namespace Examen2P_6483.Views6483
             vm.Account = new Models6483.Account6483();
             vm.Account.Transactions = new System.Collections.ObjectModel.ObservableCollection<Models6483.Transaction6483>();
             BindingContext = vm;
-            Title = "NUEVO CONTACTO";
         }
     }
 }
