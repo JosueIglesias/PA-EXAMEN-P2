@@ -19,7 +19,7 @@ namespace Examen2P_6483.ViewModel6483
         public Account6483 Account
         {
             get { return account; }
-            set { account = value; OnPropertyChanged(); }
+            set { account = value; DeleteAccountValidation(); }
         }
 
         private Transaction6483 transaction;
@@ -35,7 +35,15 @@ namespace Examen2P_6483.ViewModel6483
             get { return user; }
             set { user = value; OnPropertyChanged(); }
         }
+
+        private bool validdelete;
+        public bool ValidDelete {
+            get { return validdelete; }
+            set { validdelete = value; } }
+        
         #endregion
+
+
 
         public ICommand cmdButton { get; set; }
         public ICommand cmdAccountDetail { get; set; }
@@ -49,12 +57,10 @@ namespace Examen2P_6483.ViewModel6483
         public ICommand cmdRegister { get; set; }
         public ICommand cmdProfileEditionPage { get; set; }
         public ICommand cmdUpdateProfileInfo { get; set; }
-        
-
 
         public AccountViewModel6483()
         {
-            #region
+            #region Ejemplo
             /*
             User6483 User = new User6483()
             {
@@ -81,7 +87,6 @@ namespace Examen2P_6483.ViewModel6483
 
             User6483 RegisteredUser = new User6483();
             RegisteredUser.FirstName = "PRUEBA";
-            
 
             cmdNewAccount = new Command(async () => await PCmdNewAccount());
             cmdAccountDetail = new Command<Account6483>(async (x) => await PCmdAccountDetail(x));
@@ -99,25 +104,32 @@ namespace Examen2P_6483.ViewModel6483
 
             async Task PCmdRegister(Models6483.User6483 _User)
             {
-                if (_User.FirstName != null) {
-                    //User6483 User = new User6483()
-                    //{
-                    //    FirstName = _User.FirstName,
-                    //    PaternalLastName = _User.PaternalLastName,
-                    //    MaternalLastName = _User.MaternalLastName,
-                    //    Phone = _User.Phone,
-                    //    Accounts = new ObservableCollection<Account6483>()
-                    //};
+                if (_User.FirstName != null && _User.FirstName != "") {
 
                     RegisteredUser.FirstName = _User.FirstName;
                     RegisteredUser.PaternalLastName = _User.PaternalLastName;
                     RegisteredUser.MaternalLastName = _User.MaternalLastName;
                     RegisteredUser.Phone = _User.Phone;
-                    RegisteredUser.Accounts = new ObservableCollection<Account6483>();
+                    RegisteredUser.Accounts = new ObservableCollection<Account6483>()
+                    {
+                        new Account6483{
+                            Name = "Shopping",
+                            AccountNumber = new Random().Next(10000, 99999).ToString(),
+                            Balance = 2500,
+                            Transactions = new ObservableCollection<Transaction6483>() },
+                         new Account6483{
+                            Name = "Saving",
+                            AccountNumber = new Random().Next(10000, 99999).ToString(),
+                            Balance = 5000,
+                            Transactions = new ObservableCollection<Transaction6483>() }
+                    };
+
+
+
                     AccountsList = RegisteredUser.Accounts;
 
                     Console.WriteLine(_User.FirstName);
-                    //await Application.Current.MainPage.Navigation.PushAsync(new Views6483.MainPage6483(this));
+
                     Application.Current.MainPage = new NavigationPage(new Views6483.MainPage6483(this));
 
 
@@ -127,7 +139,7 @@ namespace Examen2P_6483.ViewModel6483
 
             async Task PCmdUpdateProfileInfo(Models6483.User6483 _User)
             {
-                if (_User.FirstName != null)
+                if (_User.FirstName != null && _User.FirstName != "")
                 {
                     RegisteredUser.FirstName = _User.FirstName;
                     RegisteredUser.PaternalLastName = _User.PaternalLastName;
@@ -159,7 +171,7 @@ namespace Examen2P_6483.ViewModel6483
             {
                 if (_Account.Balance > 0)
                 {
-                    _Account.AccountNumber = new Random().Next(1000, 9999).ToString();
+                    _Account.AccountNumber = new Random().Next(10000, 99999).ToString();
                     RegisteredUser.Accounts.Add(_Account);
                     AccountsList = RegisteredUser.Accounts;
                     Console.WriteLine("Cuenta Añadida");
@@ -198,7 +210,8 @@ namespace Examen2P_6483.ViewModel6483
 
             async Task PCmdDepositTransaction(Models6483.Transaction6483 _Transaction)
             {
-                if (_Transaction.Amount > 0)
+                bool isInt = _Transaction.Amount == (int)_Transaction.Amount;
+                if (_Transaction.Amount > 0 && (isInt = true))
                 {
                     DateTime actualDate = DateTime.Now;
 
@@ -230,7 +243,9 @@ namespace Examen2P_6483.ViewModel6483
 
             async Task PCmdWithdrawalTransaction(Models6483.Transaction6483 _Transaction)
             {
-                if (_Transaction.Amount <= Account.Balance)
+
+                bool isInt = _Transaction.Amount == (int)_Transaction.Amount;
+                if (_Transaction.Amount <= Account.Balance && (isInt = true) && _Transaction.Amount > 0)
                 {
                     DateTime actualDate = DateTime.Now;
 
@@ -264,6 +279,20 @@ namespace Examen2P_6483.ViewModel6483
 
         }
 
-        
+        public void DeleteAccountValidation()
+        {
+            if (Account.Balance == 0)
+            {
+                ValidDelete = true;
+            }
+            else
+            {
+                ValidDelete = false;
+            }
+            OnPropertyChanged();
+        }
+
+
+
     }
 }

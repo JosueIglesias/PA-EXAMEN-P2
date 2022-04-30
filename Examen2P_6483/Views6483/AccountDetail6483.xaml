@@ -6,9 +6,31 @@
              x:Class="Examen2P_6483.Views6483.AccountDetail6483"
              x:Name="thisAccountDetail">
     <ContentPage.Content>
-        <StackLayout BindingContext="{Binding BindingContext.Account, Source={x:Reference thisAccountDetail}}">
+        <StackLayout BindingContext="{Binding BindingContext.Account, Source={x:Reference thisAccountDetail}}" BackgroundColor="AliceBlue">
             <ScrollView>
-                <StackLayout BackgroundColor="AliceBlue" VerticalOptions="FillAndExpand" >
+                <StackLayout  VerticalOptions="FillAndExpand" >
+                    <Frame HorizontalOptions="Center" WidthRequest="250" Margin="10">
+                        <StackLayout>
+                            <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold"  HorizontalOptions="Center"/>
+                            <Label FontSize="Medium"  HorizontalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="$"/>
+                                        <Span Text="{Binding Balance}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label FontSize="Medium"  HorizontalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="AN:"/>
+                                        <Span Text=" "/>
+                                        <Span Text="{Binding AccountNumber}" FontAttributes="Bold" FontSize="Medium"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                    </Frame>
                     <CollectionView ItemsSource="{Binding Transactions}" >
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Transaction6483">
@@ -38,7 +60,7 @@
                                         </Label.FormattedText>
                                     </Label>
                                    
-                                    <Label Grid.Row="2" Text="{Binding Type}" FontSize="Small" TextColor="Gray"/>
+                                    <Label Grid.Row="2" Text="{Binding Type}" FontSize="Small" TextColor="Gray" FontAttributes="Italic"/>
 
                                     <BoxView Grid.Row="3" BackgroundColor="Black" HeightRequest="1" Grid.ColumnSpan="3"/>
                                     <!--<StackLayout Grid.Row="0" Grid.RowSpan="4">
@@ -60,7 +82,20 @@
                 </StackLayout>
 
                 <Button Command="{Binding BindingContext.cmdDeleteAccount, Source={x:Reference thisAccountDetail}}" Text="Delete account"
-                    CommandParameter="{Binding .}" BackgroundColor="Red" CornerRadius="5" TextColor="White" HorizontalOptions="Center"></Button>
+                    CommandParameter="{Binding .}" BackgroundColor="Red" CornerRadius="5" TextColor="White" HorizontalOptions="Center">
+                    <Button.Triggers>
+                        <DataTrigger Binding="{Binding BindingContext.ValidDelete, Source={x:Reference thisAccountDetail}}"
+                                     TargetType="Button"
+                                     Value="True">
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding BindingContext.ValidDelete, Source={x:Reference thisAccountDetail}}"
+                                     TargetType="Button"
+                                     Value="False">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
             </StackLayout>
             
 

@@ -4,20 +4,21 @@
              xmlns:model="clr-namespace:Examen2P_6483.Models6483"
              xmlns:vm="clr-namespace:Examen2P_6483.ViewModel6483"
              x:Class="Examen2P_6483.Views6483.NewTransaction6483"
-             x:Name="thisNewTransaction">
+             x:Name="thisNewTransaction"
+             Title="Transaction">
     <ContentPage.Content>
         <StackLayout >
+            <Image x:Name="ImageTransaction" Margin="10"/>
             <StackLayout BindingContext="{Binding BindingContext.Transaction, Source={x:Reference thisNewTransaction}}"
                      x:DataType="model:Transaction6483"
                      Margin="10">
-                <Label x:Name="AccountName">Transaction</Label>
+                <Label x:Name="AccountName" FontSize="Medium">Transaction</Label>
                 <Entry Text="{Binding Amount}" x:Name="EntryAmount" Keyboard="Numeric"/>
-                
+
                 <Button x:Name="BtnDeposit" Text="Accept" HorizontalOptions="Center"  Command="{Binding BindingContext.cmdDepositTransaction, Source={x:Reference thisNewTransaction}}"
-                CommandParameter="{Binding BindingContext.Transaction, Source={x:Reference thisNewTransaction}}"/>
-                
+                CommandParameter="{Binding BindingContext.Transaction, Source={x:Reference thisNewTransaction}}" CornerRadius="5" BackgroundColor="#6096BA" TextColor="White"/>
                 <Button x:Name="BtnWithdrawal" Text="Accept" HorizontalOptions="Center"  Command="{Binding BindingContext.cmdWithdrawalTransaction, Source={x:Reference thisNewTransaction}}"
-                        CommandParameter="{Binding .}"/>
+                        CommandParameter="{Binding .}" CornerRadius="5" BackgroundColor="#6096BA" TextColor="White"/>
                 
                 
             </StackLayout>

@@ -13,6 +13,7 @@
         <StackLayout Margin="0,0,0,10" BackgroundColor="AliceBlue">
             <ScrollView>
                 <StackLayout BackgroundColor="AliceBlue" VerticalOptions="FillAndExpand" Margin="10" >
+                    <Label Text="Welcome!" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
                     <CollectionView ItemsSource="{Binding BindingContext.AccountsList, Source={x:Reference thisMainPage}}" >
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
@@ -54,11 +55,12 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
+                    
                 </StackLayout>
             </ScrollView>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                <Button Command="{Binding BindingContext.cmdProfileEditionPage, Source={x:Reference thisMainPage}}" Text="Edit profile" HorizontalOptions="Center" TextColor="White" BackgroundColor="#6096BA"></Button>
-                <Button Command="{Binding BindingContext.cmdNewAccount, Source={x:Reference thisMainPage}}" Text="New Account" HorizontalOptions="Center" TextColor="White" BackgroundColor="#6096BA"></Button>
+                <Button Command="{Binding BindingContext.cmdProfileEditionPage, Source={x:Reference thisMainPage}}" Text="Edit profile" HorizontalOptions="Center" TextColor="White" BackgroundColor="#274C77" CornerRadius="5"></Button>
+                <Button Command="{Binding BindingContext.cmdNewAccount, Source={x:Reference thisMainPage}}" Text="New Account" HorizontalOptions="Center" TextColor="White" BackgroundColor="#274C77" CornerRadius="5"></Button>
 
             </StackLayout>
 

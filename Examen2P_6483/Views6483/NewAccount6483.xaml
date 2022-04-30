@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:Examen2P_6483.ViewModel6483"
              x:Class="Examen2P_6483.Views6483.NewAccount6483"
              x:Name="thisNewAccount"
+             Title="New Account"
              >
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding BindingContext.Account, Source={x:Reference thisNewAccount}}"
@@ -30,6 +31,18 @@
                         <triggers:NewAccountValidationTrigger6483/>
                     </EventTrigger>
                 </Button.Triggers>-->
+                <Button.Triggers>
+                    <DataTrigger Binding="{Binding BindingContext.ValidName, Source={x:Reference thisNewAccount}}"
+                                     TargetType="Button"
+                                     Value="True">
+                        <Setter Property="IsEnabled" Value="True"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding BindingContext.ValidName, Source={x:Reference thisNewAccount}}"
+                                     TargetType="Button"
+                                     Value="False">
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                </Button.Triggers>
             </Button>
         </StackLayout>
     </ContentPage.Content>
